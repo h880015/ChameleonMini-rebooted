@@ -816,6 +816,10 @@ uint16_t MifareClassicAppProcess(uint8_t* Buffer, uint16_t BitCount) {
                 }
                 // Write to app memory
                 if(!isDetectionCanaryWritten) {
+                    /* copy UID from card memory to work memory */
+                    ConfigurationUidType uid;
+                    MifareClassicGetUid( uid );
+                    AppWorkingMemoryWrite( uid, MFCLASSIC_MEM_S0B0_ADDRESS, ActiveConfiguration.UidSize );
                     AppWorkingMemoryWrite(DetectionCanary, DETECTION_BLOCK0_CANARY_ADDR, DETECTION_BLOCK0_CANARY_SIZE);
                     isDetectionCanaryWritten = true;
                 }
